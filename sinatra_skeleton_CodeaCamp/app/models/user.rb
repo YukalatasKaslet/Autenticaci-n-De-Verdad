@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include BCrypt
   # Remember to create a migration!
+  validates :name, :password, presence: true
+  validates :email, presence: true, uniqueness: true
 
   #se está usando en self.authenticate *user.password*
   def password
