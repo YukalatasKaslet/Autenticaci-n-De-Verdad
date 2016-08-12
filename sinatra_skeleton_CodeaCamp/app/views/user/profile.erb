@@ -1,0 +1,10 @@
+  <p>
+    Usuario:<%= @user.name %><br>
+    Email:<%= @user.email %><br>
+  </p>
+
+  <div>
+    <form action="/users/<%= @user.id %>/edit" method="GET">
+      <input type="submit" value="Editar">
+    </form>
+  </div>

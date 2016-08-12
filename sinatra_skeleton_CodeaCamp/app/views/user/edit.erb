@@ -1,0 +1,19 @@
+<h1>Editar Usuario</h1>
+   <form action="/users/<%= @user.id %>" method="POST" >
+    <input type="hidden" name="_method" value="PUT">
+    Email:<br>
+    <input type="text"      name="user[email]"><br>
+    Password:<br>
+    <input type="password"  name="user[password]"><br>
+    New password:<br>
+    <input type="password"  name="user[new_password]"><br>
+    <input type="submit" value="Logueame!">    
+   </form>
+
+
+  <div>
+    <form action="/users/<%= @user.id %>" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Borrar!">
+    </form>
+  </div>

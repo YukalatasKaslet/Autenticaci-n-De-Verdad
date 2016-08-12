@@ -1,11 +1,13 @@
-include BCrypt
-
 class User < ActiveRecord::Base
+  include BCrypt
   # Remember to create a migration!
+
+  #se está usando en self.authenticate *user.password*
   def password
     @password ||= Password.new(password_digest)
   end
 
+  #se usa al momento de crear o modificar la contraseña
   def password=(user_password)
     @password = Password.create(user_password)
     self.password_digest = @password

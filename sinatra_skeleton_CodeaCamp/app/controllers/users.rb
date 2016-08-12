@@ -1,10 +1,11 @@
 #CREATE
 get '/signup' do
-  erb :signup
+  erb :'user/signup'
 end
 
 post '/signup' do
-  user = User.new(params[:user])
+  user = User.new(name: params[:user]["name"], email: params[:user]["email"])
+  user.password=(params[:user]["password"])
   if user.save
     session[:user_id] = user.id
     redirect to("/users/#{user.id}")
@@ -13,7 +14,7 @@ end
 
 #READ
 get '/login' do 
-  erb :login
+  erb :'user/login'
 end
 
 post '/login' do
@@ -22,19 +23,29 @@ post '/login' do
   if user != nil 
     session[:user_id] = user.id
     redirect to("/users/#{user.id}")
+  else
+    redirect to ('/Error')
   end
 end
 
 get '/users/:id' do
   @user = User.find(params[:id])
-  erb :profile
+  erb :'user/profile'
 end
 
 #UPDATE
 put '/users/:id' do
-  @user = User.find(params[:id])
-  @user.update(params[:user])
-  redirect to("/users/#{user.id}")
+  user = User.find(params[:id])
+
+  user = User.authenticate(user.email, params[:user]["password"])
+  if user != nil
+    user.password=(params[:user]["new_password"])
+    user.save
+    redirect to("/users/#{user.id}")
+  else
+    redirect to ('/Error')
+  end
+  
 end
 
 #DELETE
@@ -53,7 +64,10 @@ end
 #EDIT 
 get '/users/:id/edit' do
   @user = User.find(params[:id]) 
-  erb :edit
+  erb :'user/edit'
 end
 
 
+get '/Error' do
+  erb :error
+end
