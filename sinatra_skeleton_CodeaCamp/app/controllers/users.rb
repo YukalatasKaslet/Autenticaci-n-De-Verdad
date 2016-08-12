@@ -9,6 +9,8 @@ post '/signup' do
   if user.save
     session[:user_id] = user.id
     redirect to("/users/#{user.id}")
+  else
+    redirect to ('/Error')
   end
 end
 
